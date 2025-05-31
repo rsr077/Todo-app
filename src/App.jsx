@@ -1,5 +1,7 @@
 
 import './App.css'
+
+
 import { CreateTodo } from './components/CreateTodo'
 
 function App() {
@@ -7,7 +9,7 @@ function App() {
 
   return (
     <>
-    <CreateTodo />
+<CreateTodo/>
     </>
   )
 }

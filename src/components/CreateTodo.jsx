@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 dayjs.extend(relativeTime);
 
-export function CreateTodo() {
+ export function CreateTodo() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [todos, setTodos] = useState([]);
@@ -22,7 +22,7 @@ export function CreateTodo() {
   }, [darkMode]);
 
   const fetchTodos = async () => {
-    const res = await fetch("http://localhost:3000/todos");
+    const res = await fetch("https://todo-backend-4h55.onrender.com/todos");
     const data = await res.json();
     setTodos(data.todos || []);
   };
@@ -35,7 +35,7 @@ export function CreateTodo() {
     if (!title || !description) return toast.warn("Please fill all fields");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3000/todo", {
+      const res = await fetch("https://todo-backend-4h55.onrender.com/todo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, description }),
@@ -58,7 +58,7 @@ export function CreateTodo() {
     if (!title || !description) return toast.warn("Please fill all fields");
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/todos/${editId}`, {
+      const res = await fetch(`https://todo-backend-4h55.onrender.com/todos/${editId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, description }),
@@ -87,7 +87,7 @@ export function CreateTodo() {
   };
 
   const markAsDone = async (id) => {
-    await fetch("http://localhost:3000/completed", {
+    await fetch("https://todo-backend-4h55.onrender.com/completed", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
@@ -97,10 +97,8 @@ export function CreateTodo() {
   };
 
   const handleDelete = async (id) => {
-  
-    if (!confirm) return;
     try {
-      const res = await fetch(`http://localhost:3000/todos/${id}`, {
+      const res = await fetch(`https://todo-backend-4h55.onrender.com/todos/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete");
@@ -124,7 +122,7 @@ export function CreateTodo() {
       <ToastContainer position="top-right" />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h2>{isEditing ? "Edit Todo" : "Create Todo"}</h2>
-        <button onClick={() => setDarkMode(!darkMode)} style={{ fontSize: 18 }}>
+        <button  className="cursor-pointer" onClick={() => setDarkMode(!darkMode)} style={{ fontSize: 18 }}>
           {darkMode ? "☀️ Light" : "🌙 Dark"}
         </button>
       </div>
@@ -141,7 +139,7 @@ export function CreateTodo() {
         placeholder="Description"
         style={{ margin: 8, padding: 12, width: "100%", fontSize: 16 }}
       />
-      <button
+      <button className="cursor-pointer"
         onClick={isEditing ? updateTodo : createTodo}
         disabled={loading}
         style={{ padding: 12, fontSize: 16 }}
@@ -150,9 +148,9 @@ export function CreateTodo() {
       </button>
 
       <div style={{ marginTop: 20, marginBottom: 20 }}>
-        <button onClick={() => setFilter("all")} style={{ marginRight: 8 }}>All</button>
-        <button onClick={() => setFilter("pending")} style={{ marginRight: 8 }}>Pending</button>
-        <button onClick={() => setFilter("completed")}>Completed</button>
+        <button  className="cursor-pointer " onClick={() => setFilter("all")} style={{ marginRight: 8 }}>All</button>
+        <button  className="cursor-pointer" onClick={() => setFilter("pending")} style={{ marginRight: 8 }}>Pending</button>
+        <button  className="cursor-pointer" onClick={() => setFilter("completed")}>Completed</button>
       </div>
 
       <h2>Todos</h2>
@@ -184,14 +182,14 @@ export function CreateTodo() {
           <small>Added {formatTime(todo.createdAt)}</small>
           <p>Status: {todo.completed ? "✅ Done" : "🕒 Pending"}</p>
           {!todo.completed && (
-            <button onClick={() => markAsDone(todo._id)} style={{ marginRight: 10 }}>
+            <button  className="cursor-pointer p-8" onClick={() => markAsDone(todo._id)} style={{ marginRight: 10 }}>
               Mark as Done ✅
             </button>
           )}
-          <button onClick={() => handleEdit(todo)} style={{ marginRight: 10 }}>
+          <button  className="cursor-pointer" onClick={() => handleEdit(todo)} style={{ marginRight: 10 }}>
             Edit ✏️
           </button>
-          <button onClick={() => handleDelete(todo._id)}>Delete ❌</button>
+          <button  className="cursor-pointer" onClick={() => handleDelete(todo._id)}>Delete ❌</button>
         </div>
       ))}
     </div>
